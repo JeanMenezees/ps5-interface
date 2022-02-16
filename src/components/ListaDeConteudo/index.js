@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Box } from "../../styled.components/styles";
+import React, { useContext, useEffect, useState } from "react";
+import { Box, Text } from "../../styled.components/styles";
 import imagemJogo from "../../assets/imagens.jogos/img-jogo1.jpg";
+import imagemJogo2 from "../../assets/imagens.jogos/img-jogo2.jpg";
+import imagemJogo3 from "../../assets/imagens.jogos/img-jogo3.png";
+import contextoJogo from "../../contexts/contextoJogo";
 
 // Setando o estilo do jogo selecionado
 const estiloSelecionado = {
@@ -26,44 +29,88 @@ const dados_jogos = [
     id: 1,
     nome: "Call of duty warzone",
     descricao: "Descricao 1",
-    capa_url: "../../assets/capa.jogos/capa-jogo1.png",
+    capa_url: 1,
     imagem: imagemJogo,
+    conquistas: "2/10",
+    progresso: "70%",
   },
   {
     id: 2,
-    nome: "Call of duty warzone2",
+    nome: "Resident Evil Village",
     descricao: "Descricao 2",
-    capa_url: "../../assets/capa.jogos/capa-jogo1.png",
-    imagem: imagemJogo,
+    capa_url: 2,
+    imagem: imagemJogo2,
+    conquistas: "3/10",
+    progresso: "45%",
   },
   {
     id: 3,
-    nome: "Call of duty warzone2",
+    nome: "FIFA22",
     descricao: "Descricao 3",
-    capa_url: "../../assets/capa.jogos/capa-jogo1.png",
-    imagem: imagemJogo,
+    capa_url: 3,
+    imagem: imagemJogo3,
+    conquistas: "4/10",
+    progresso: "30%",
   },
 ];
 
 export default function Lista() {
   const [keySelecionado, setKeySelecionado] = useState(0);
-  const [sentido, setSentido] = useState();
+  const [movimento, setMovimento] = useState({ pixels: 0, rem: 0 });
   const [jogos, setJogos] = useState(dados_jogos);
 
+  const contexto = useContext(contextoJogo);
+
   useEffect(() => {
-    document.addEventListener("keydown", (event) => {
+    document.addEventListener("keypress", (event) => {
       const tecla = event.key;
 
       if (tecla === "a") {
-        setKeySelecionado(key => key - 1);
-        setSentido("+");
+        setKeySelecionado((key) => {
+          if (key - 1 < 0) {
+            return key;
+          } else {
+            return key - 1;
+          }
+        });
+        // Setando movimento
+        setMovimento((ultimoMovimento) => {
+          return {
+            pixels: ultimoMovimento.pixels - 4,
+            rem: ultimoMovimento.rem - 5,
+          };
+        });
       }
       if (tecla === "d") {
-        setKeySelecionado( key => key + 1);
-        setSentido("-");
+        setKeySelecionado((key) => {
+          if (key + 1 > 2) {
+            return key;
+          } else {
+           return key + 1;
+          }
+        });
+        // Setando movimento
+        setMovimento((ultimoMovimento) => {
+          return {
+            pixels: ultimoMovimento.pixels + 4,
+            rem: ultimoMovimento.rem + 5,
+          };
+        });
       }
     });
   }, []);
+
+  useEffect(() => {
+    console.log(movimento);
+  }, [movimento]);
+
+  // Toda vez que muda o jogo selecionado, as informaçoes enviadas para os detalhes mudam
+  useEffect(() => {
+    contexto.setNomeJogo(jogos[keySelecionado].nome);
+    contexto.setDescJogo(jogos[keySelecionado].descricao);
+    contexto.setConquistas(jogos[keySelecionado].conquistas);
+    contexto.setProgresso(jogos[keySelecionado].progresso);
+  }, [keySelecionado]);
 
   return (
     <Box
@@ -74,8 +121,8 @@ export default function Lista() {
         display: "flex",
         flexDirection: "row",
         alignItems: "flex-start",
-        transition : "1s",
-        transform: `translateX(calc(${sentido}4px ${sentido} 5rem))`
+        transition: "1s",
+        transform: `translateX(calc(${movimento.pixels}px - ${movimento.rem}rem))`,
       }}
     >
       {jogos.map((item) => {
@@ -89,8 +136,24 @@ export default function Lista() {
                 backgroundImage: `url(${item.imagem})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
+                backgroundPosition: "center center",
               }}
-            ></Box>
+            >
+              <Text
+                as="p"
+                style={{
+                  fontSize: "1.2rem",
+                  color: "white",
+                  fontWeight: "bold",
+                  position: "absolute",
+                  bottom: "-15%",
+                  left: "110%",
+                  width: "300px",
+                }}
+              >
+                {item.nome}
+              </Text>
+            </Box>
           );
         } else {
           return (
@@ -102,6 +165,7 @@ export default function Lista() {
                 backgroundImage: `url(${item.imagem})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
+                backgroundPosition: "center center",
               }}
             ></Box>
           );

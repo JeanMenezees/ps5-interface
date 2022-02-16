@@ -3,7 +3,7 @@ import { Box, Text, Button } from "../../styled.components/styles";
 import iconeTrofeu from "../../assets/trofeu.svg";
 import capaJogo from "../../assets/capa.jogos/jogo1-logo.png";
 
-export default function Detalhes() {
+export default function Detalhes(props) {
   return (
     <Box
       as="div"
@@ -14,7 +14,7 @@ export default function Detalhes() {
         justifyContent: "space-between",
         width: "90%",
         position: "fixed",
-        bottom: "96px",
+        bottom: "15%",
         margin: "0 5%"
       }}
     >
@@ -51,13 +51,13 @@ export default function Detalhes() {
           <Text
             as="h1"
             style={{
-              fontSize: "1.2rem",
+              fontSize: "2rem",
               color: "white",
               width: "60%",
               textAlign: "left",
             }}
           >
-            Nome do jogo
+            {props.infos.nome}
           </Text>
           <Box
             as="div"
@@ -65,13 +65,13 @@ export default function Detalhes() {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "space-between",
             }}
           >
             <Button
               style={{
-                width: "80%",
-                borderRadius: "20px",
+                width: "50%",
+                marginRight: "8px",
+                borderRadius: "40px",
                 textAlign: "center",
                 padding: "16px",
                 fontWeight: "bold",
@@ -101,7 +101,7 @@ export default function Detalhes() {
       <Box
         as="div"
         style={{
-          width: "20%",
+          width: "15%",
           height: "70px",
           backgroundColor: "black",
           display: "flex",
@@ -158,7 +158,7 @@ export default function Detalhes() {
                 margin: "0"
               }}
             >
-                0%
+                {props.infos.progresso}
             </Text>
           </Box>
         </Box>
@@ -198,7 +198,7 @@ export default function Detalhes() {
                 margin: "0"
               }}
             >
-                0/20
+                {props.infos.conquistas}
             </Text>
           </Box>
         </Box>

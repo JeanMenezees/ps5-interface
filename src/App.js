@@ -2,10 +2,16 @@ import Header from "./components/Header";
 import Lista from "./components/ListaDeConteudo";
 import Detalhes from "./components/Detalhes";
 import { Box } from "./styled.components/styles";
-import backGround from "./assets/fundo.jpg"
-
+import backGround from "./assets/fundo.jpg";
+import ContextoJogo from "./contexts/contextoJogo";
+import { useState } from "react/cjs/react.development";
 
 function App() {
+  const [nomeJogo, setNomeJogo] = useState("Nome do jogo");
+  const [descJogo, setDescJogo] = useState("Descrição do jogo");
+  const [conquistas, setConquistas] = useState("0/10");
+  const [progresso, setProgresso] = useState("50%");
+
   return (
     <Box
       as="div"
@@ -16,15 +22,36 @@ function App() {
         backgroundImage: `url(${backGround})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        overflow: "hidden"
+        backgroundPosition: "center center",
+        overflow: "hidden",
       }}
     >
-      {/* // Header da interface */}
-      <Header />
-      {/* // Lista de jogos/midia */}
-      <Lista />
-      {/* // Detalhes do jogo */}
-      <Detalhes />
+      <ContextoJogo.Provider
+        value={{
+          nomeJogo: nomeJogo,
+          descJogo: descJogo,
+          conquistasJogo: conquistas,
+          progressoJogo: progresso,
+          setNomeJogo: setNomeJogo,
+          setDescJogo: setDescJogo,
+          setConquistas: setConquistas,
+          setProgresso: setProgresso,
+        }}
+      >
+        {/* // Header da interface */}
+        <Header />
+        {/* // Lista de jogos/midia */}
+        <Lista />
+        {/* // Detalhes do jogo */}
+        <Detalhes
+          infos={{
+            nome: nomeJogo,
+            desc: descJogo,
+            conquistas: conquistas,
+            progresso: progresso,
+          }}
+        />
+      </ContextoJogo.Provider>
     </Box>
   );
 }

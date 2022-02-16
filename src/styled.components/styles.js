@@ -4,7 +4,7 @@ export const Box = styled.div`
   background-image: ${(props) => props.style.backgroundImage};
   background-repeat: ${(props) => props.style.backgroundRepeat};
   background-color: ${(props) => props.style.backgroundColor};
-  background-size: ${props => props.style.backgroundSize};
+  background-size: ${(props) => props.style.backgroundSize};
 
   height: ${(props) => props.style.height};
   width: ${(props) => (props.coverWidth ? "100%" : props.style.width)};
@@ -104,4 +104,6 @@ export const Text = styled.p`
   font-weight: ${(props) => props.style.fontWeigth};
   color: ${(props) => props.style.color};
   text-align: ${(props) => props.style.textAlign};
+
+  animation: ${(props) => props.style.animation};
 `;
