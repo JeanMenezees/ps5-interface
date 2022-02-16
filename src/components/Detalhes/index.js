@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Text, Button } from "../../styled.components/styles";
 import iconeTrofeu from "../../assets/trofeu.svg";
 import capaJogo from "../../assets/capa.jogos/jogo1-logo.png";
+import capaJogo2 from "../../assets/capa.jogos/jogo2-logo.png";
+import capaJogo3 from "../../assets/capa.jogos/jogo3-logo.png";
 
 export default function Detalhes(props) {
   return (

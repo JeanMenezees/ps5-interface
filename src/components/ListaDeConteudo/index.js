@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { Box, Text } from "../../styled.components/styles";
 import imagemJogo from "../../assets/imagens.jogos/img-jogo1.jpg";
 import imagemJogo2 from "../../assets/imagens.jogos/img-jogo2.jpg";
@@ -29,7 +29,7 @@ const dados_jogos = [
     id: 1,
     nome: "Call of duty warzone",
     descricao: "Descricao 1",
-    capa_url: 1,
+    logo: 1,
     imagem: imagemJogo,
     conquistas: "2/10",
     progresso: "70%",
@@ -38,7 +38,7 @@ const dados_jogos = [
     id: 2,
     nome: "Resident Evil Village",
     descricao: "Descricao 2",
-    capa_url: 2,
+    logo: 2,
     imagem: imagemJogo2,
     conquistas: "3/10",
     progresso: "45%",
@@ -47,17 +47,43 @@ const dados_jogos = [
     id: 3,
     nome: "FIFA22",
     descricao: "Descricao 3",
-    capa_url: 3,
+    logo: 3,
     imagem: imagemJogo3,
     conquistas: "4/10",
     progresso: "30%",
   },
 ];
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "avancar":
+      if (state.ky + 1 < 3) {
+        return {
+          mov: { pixels: state.mov.pixels + 4, rem: state.mov.rem + 5 },
+          ky: state.ky + 1,
+        };
+      } else {
+        return { mov: { pixels: state.mov.pixels, rem: state.mov.rem }, ky: state.ky };
+      }
+    case "voltar":
+      if (state.ky - 1 >= 0) {
+        return {
+          mov: { pixels: state.mov.pixels - 4, rem: state.mov.rem - 5 },
+          ky: state.ky - 1,
+        };
+      } else {
+        return { mov: { pixels: state.mov.pixels, rem: state.mov.rem }, ky: state.ky };
+      }
+  }
+}
+
 export default function Lista() {
-  const [keySelecionado, setKeySelecionado] = useState(0);
-  const [movimento, setMovimento] = useState({ pixels: 0, rem: 0 });
   const [jogos, setJogos] = useState(dados_jogos);
+
+  const [state, dispatch] = useReducer(reducer, {
+    mov: { pixels: 0, rem: 0 },
+    ky: 0,
+  });
 
   const contexto = useContext(contextoJogo);
 
@@ -66,51 +92,23 @@ export default function Lista() {
       const tecla = event.key;
 
       if (tecla === "a") {
-        setKeySelecionado((key) => {
-          if (key - 1 < 0) {
-            return key;
-          } else {
-            return key - 1;
-          }
-        });
-        // Setando movimento
-        setMovimento((ultimoMovimento) => {
-          return {
-            pixels: ultimoMovimento.pixels - 4,
-            rem: ultimoMovimento.rem - 5,
-          };
-        });
+        dispatch({ type: "voltar" });
       }
       if (tecla === "d") {
-        setKeySelecionado((key) => {
-          if (key + 1 > 2) {
-            return key;
-          } else {
-           return key + 1;
-          }
-        });
-        // Setando movimento
-        setMovimento((ultimoMovimento) => {
-          return {
-            pixels: ultimoMovimento.pixels + 4,
-            rem: ultimoMovimento.rem + 5,
-          };
-        });
+        dispatch({ type: "avancar" });
       }
     });
   }, []);
 
-  useEffect(() => {
-    console.log(movimento);
-  }, [movimento]);
-
   // Toda vez que muda o jogo selecionado, as informaçoes enviadas para os detalhes mudam
   useEffect(() => {
-    contexto.setNomeJogo(jogos[keySelecionado].nome);
-    contexto.setDescJogo(jogos[keySelecionado].descricao);
-    contexto.setConquistas(jogos[keySelecionado].conquistas);
-    contexto.setProgresso(jogos[keySelecionado].progresso);
-  }, [keySelecionado]);
+    console.log(state);
+    contexto.setNomeJogo(jogos[state.ky].nome);
+    contexto.setDescJogo(jogos[state.ky].descricao);
+    contexto.setConquistas(jogos[state.ky].conquistas);
+    contexto.setProgresso(jogos[state.ky].progresso);
+    contexto.setLogo(jogos[state.ky].logo);
+  }, [state.ky]);
 
   return (
     <Box
@@ -122,11 +120,11 @@ export default function Lista() {
         flexDirection: "row",
         alignItems: "flex-start",
         transition: "1s",
-        transform: `translateX(calc(${movimento.pixels}px - ${movimento.rem}rem))`,
+        transform: `translateX(calc(${state.mov.pixels}px - ${state.mov.rem}rem))`,
       }}
     >
       {jogos.map((item) => {
-        if (jogos.indexOf(item) === keySelecionado) {
+        if (jogos.indexOf(item) === state.ky) {
           return (
             <Box
               key={item.id}

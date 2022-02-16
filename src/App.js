@@ -11,6 +11,7 @@ function App() {
   const [descJogo, setDescJogo] = useState("Descrição do jogo");
   const [conquistas, setConquistas] = useState("0/10");
   const [progresso, setProgresso] = useState("50%");
+  const [logo, setLogo] = useState();
 
   return (
     <Box
@@ -36,6 +37,8 @@ function App() {
           setDescJogo: setDescJogo,
           setConquistas: setConquistas,
           setProgresso: setProgresso,
+          logo: logo,
+          setLogo: setLogo
         }}
       >
         {/* // Header da interface */}
@@ -49,6 +52,7 @@ function App() {
             desc: descJogo,
             conquistas: conquistas,
             progresso: progresso,
+            logo: logo
           }}
         />
       </ContextoJogo.Provider>
