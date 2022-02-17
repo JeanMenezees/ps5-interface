@@ -35,7 +35,9 @@ export default function Header() {
             border: "0",
             padding: "16px",
             fontSize: "1.5rem",
+            fontWeight: "bold",
             color: "white",
+            margin: "0 16px"
           }}
         >
           Jogos
@@ -45,6 +47,7 @@ export default function Header() {
             backgroundColor: "transparent",
             border: "0",
             padding: "16px",
+            fontWeight: "bold",
             fontSize: "1.5rem",
             color: "white",
           }}
@@ -70,7 +73,7 @@ export default function Header() {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
         >
           <Button
@@ -107,8 +110,8 @@ export default function Header() {
               backgroundColor: "transparent",
               backgroundImage: "url(https://github.com/JeanMenezees.png)",
               backgroundSize: "cover",
-              height: "50px",
-              width: "50px",
+              height: "35px",
+              width: "35px",
               borderRadius: "50%",
               margin: "0 4px"
             }}

@@ -30,6 +30,7 @@ const dados_jogos = [
     nome: "Call of duty warzone",
     descricao: "Descricao 1",
     logo: 1,
+    fundo: 1,
     imagem: imagemJogo,
     conquistas: "2/10",
     progresso: "70%",
@@ -39,6 +40,7 @@ const dados_jogos = [
     nome: "Resident Evil Village",
     descricao: "Descricao 2",
     logo: 2,
+    fundo: 2,
     imagem: imagemJogo2,
     conquistas: "3/10",
     progresso: "45%",
@@ -48,6 +50,7 @@ const dados_jogos = [
     nome: "FIFA22",
     descricao: "Descricao 3",
     logo: 3,
+    fundo: 3,
     imagem: imagemJogo3,
     conquistas: "4/10",
     progresso: "30%",
@@ -102,12 +105,12 @@ export default function Lista() {
 
   // Toda vez que muda o jogo selecionado, as informaçoes enviadas para os detalhes mudam
   useEffect(() => {
-    console.log(state);
     contexto.setNomeJogo(jogos[state.ky].nome);
     contexto.setDescJogo(jogos[state.ky].descricao);
     contexto.setConquistas(jogos[state.ky].conquistas);
     contexto.setProgresso(jogos[state.ky].progresso);
     contexto.setLogo(jogos[state.ky].logo);
+    contexto.setFundo(jogos[state.ky].fundo);
   }, [state.ky]);
 
   return (
@@ -140,13 +143,13 @@ export default function Lista() {
               <Text
                 as="p"
                 style={{
-                  fontSize: "1.2rem",
+                  fontSize: "1.5rem",
                   color: "white",
-                  fontWeight: "bold",
                   position: "absolute",
-                  bottom: "-15%",
+                  bottom: "-20%",
                   left: "110%",
                   width: "300px",
+                  textShadow: "black 2px 2px 20px"
                 }}
               >
                 {item.nome}

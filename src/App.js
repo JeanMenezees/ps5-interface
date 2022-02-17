@@ -2,16 +2,32 @@ import Header from "./components/Header";
 import Lista from "./components/ListaDeConteudo";
 import Detalhes from "./components/Detalhes";
 import { Box } from "./styled.components/styles";
-import backGround from "./assets/fundo.jpg";
+import backGround1 from "./assets/fundos/fundo1.jpg"
+import backGround2 from "./assets/fundos/fundo2.jpg"
+import backGround3 from "./assets/fundos/fundo3.jpg"
 import ContextoJogo from "./contexts/contextoJogo";
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react/cjs/react.development";
 
 function App() {
   const [nomeJogo, setNomeJogo] = useState("Nome do jogo");
   const [descJogo, setDescJogo] = useState("Descrição do jogo");
   const [conquistas, setConquistas] = useState("0/10");
   const [progresso, setProgresso] = useState("50%");
-  const [logo, setLogo] = useState();
+  const [logo, setLogo] = useState(1);
+  const [fundo, setFundo] = useState(0);
+  const [fundoImg, setFundoImg] = useState(backGround1);
+
+  useEffect(() => {
+    if(fundo === 1){
+      setFundoImg(backGround1);
+    }
+    if(fundo === 2){
+      setFundoImg(backGround2);
+    }
+    if(fundo === 3){
+      setFundoImg(backGround3);
+    }
+  }, [fundo])
 
   return (
     <Box
@@ -20,11 +36,12 @@ function App() {
         width: "100vw",
         height: "100vh",
         margin: "0",
-        backgroundImage: `url(${backGround})`,
+        backgroundImage: `url(${fundoImg})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center center",
         overflow: "hidden",
+        transition: "background 1.5s linear"
       }}
     >
       <ContextoJogo.Provider
@@ -38,7 +55,8 @@ function App() {
           setConquistas: setConquistas,
           setProgresso: setProgresso,
           logo: logo,
-          setLogo: setLogo
+          setLogo: setLogo,
+          setFundo, setFundo
         }}
       >
         {/* // Header da interface */}

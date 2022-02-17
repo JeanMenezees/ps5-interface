@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Text, Button } from "../../styled.components/styles";
 import iconeTrofeu from "../../assets/trofeu.svg";
 import capaJogo from "../../assets/capa.jogos/jogo1-logo.png";
 import capaJogo2 from "../../assets/capa.jogos/jogo2-logo.png";
 import capaJogo3 from "../../assets/capa.jogos/jogo3-logo.png";
+import { useEffect } from "react/cjs/react.development";
 
 export default function Detalhes(props) {
+
+  const [numLogo, setNumLogo] = useState(capaJogo);
+
+  useEffect(() => {
+    if(props.infos.logo === 1){
+      setNumLogo(capaJogo)
+    }
+    if(props.infos.logo === 2){
+      setNumLogo(capaJogo2)
+    }
+    if(props.infos.logo === 3){
+      setNumLogo(capaJogo3)
+    }
+  }, [props.infos.logo])
+
   return (
     <Box
       as="div"
@@ -14,10 +30,10 @@ export default function Detalhes(props) {
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "space-between",
-        width: "90%",
+        width: "80%",
         position: "fixed",
         bottom: "15%",
-        margin: "0 5%"
+        margin: "0 10%"
       }}
     >
       <Box
@@ -27,13 +43,13 @@ export default function Detalhes(props) {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          width: "30%",
+          width: "50%",
         }}
       >
         <Box
           as="div"
           style={{
-            backgroundImage: `url(${capaJogo})`,
+            backgroundImage: `url(${numLogo})`,
             width: "100%",
             height: "150px",
             backgroundSize: "contain",
@@ -64,6 +80,8 @@ export default function Detalhes(props) {
           <Box
             as="div"
             style={{
+              width: "60%",
+              minWidth: "300px",
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
@@ -72,8 +90,11 @@ export default function Detalhes(props) {
             <Button
               style={{
                 width: "50%",
+                minWidth: "150px",
                 marginRight: "8px",
                 borderRadius: "40px",
+                backgroundColor: "rgba(31,31,45,0.7)",
+                color: "white",
                 textAlign: "center",
                 padding: "16px",
                 fontWeight: "bold",
@@ -86,6 +107,8 @@ export default function Detalhes(props) {
             <Button
               style={{
                 borderRadius: "100%",
+                backgroundColor: "rgba(31,31,45,0.7)",
+                color: "white",
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -95,7 +118,7 @@ export default function Detalhes(props) {
                 border: "0",
               }}
             >
-              ...
+              . . .
             </Button>
           </Box>
         </Box>
@@ -104,8 +127,9 @@ export default function Detalhes(props) {
         as="div"
         style={{
           width: "15%",
+          minWidth: "200px", 
           height: "70px",
-          backgroundColor: "black",
+          backgroundColor: "rgba(0,0,0,0.7)",
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
