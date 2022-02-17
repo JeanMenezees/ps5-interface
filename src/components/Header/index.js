@@ -34,7 +34,7 @@ export default function Header() {
             backgroundColor: "transparent",
             border: "0",
             padding: "16px",
-            fontSize: "1.5rem",
+            fontSize: "1.7rem",
             fontWeight: "bold",
             color: "white",
             margin: "0 16px"
@@ -48,7 +48,7 @@ export default function Header() {
             border: "0",
             padding: "16px",
             fontWeight: "bold",
-            fontSize: "1.5rem",
+            fontSize: "1.7rem",
             color: "white",
           }}
         >
